@@ -17,7 +17,7 @@
               </v-layout>
             </v-card-title>
             <v-card-text>
-              <v-form>
+              <v-form ref="form">
                 <v-text-field
                   name="login"
                   label="Username"
@@ -66,43 +66,48 @@ export default {
   methods: {
     loginHandler: function(e) {
       e.preventDefault();
-      if (this.password.length > 0) {
-        this.loading = true;
-        this.$http
-          .post(
-            "api/users/login",
-            {
-              login: this.login,
-              password: this.password
-            },
-            {
-              validateStatus: function(status) {
-                return status < 500;
-              }
-            }
-          )
-          .then(response => {
-            this.loading = false;
-            if (response.data.status === "success") {
-              localStorage.setItem("jtoken", response.data.data.token);
-
-              if (localStorage.getItem("jtoken") != null) {
-                this.$emit("loggedin");
-
-                if (this.$route.params.nextUrl != null) {
-                  this.$router.push(this.$route.params.nextUrl);
-                } else {
-                  this.$router.push("/");
+      if (this.$refs.form.validate()) {
+        this.errors = [];
+        if (this.password.length > 0) {
+          this.loading = true;
+          this.$http
+            .post(
+              "api/users/login",
+              {
+                login: this.login,
+                password: this.password
+              },
+              {
+                validateStatus: function(status) {
+                  return status < 500;
                 }
               }
-            } else {
-              this.errors = response.data.data.password;
-            }
-          })
-          .catch(err => {
-            this.loading = false;
-            alert("Some error occured" + err.message);
-          });
+            )
+            .then(response => {
+              this.loading = false;
+              if (response.data.status === "success") {
+                localStorage.setItem("jtoken", response.data.data.token);
+
+                if (localStorage.getItem("jtoken") != null) {
+                  this.$emit("loggedin");
+
+                  if (this.$route.params.nextUrl != null) {
+                    this.$router.push(this.$route.params.nextUrl);
+                  } else {
+                    this.$router.push("/");
+                  }
+                }
+              } else {
+                for (let key in response.data.data) {
+                  this.errors.push(response.data.data[key][0].message);
+                }
+              }
+            })
+            .catch(err => {
+              this.loading = false;
+              alert("Some error occured" + err.message);
+            });
+        }
       }
     }
   }
