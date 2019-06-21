@@ -1,6 +1,6 @@
 <template>
   <v-layout align-center justify-center>
-    <v-flex xs12 sm5 md4 lg3>
+    <v-flex xs12 sm5 md4 lg3 v-if="!successfulRegistration">
       <v-card>
         <v-card-title primary-title>
           <v-layout column>
@@ -45,20 +45,13 @@
               label="Password"
               type="password"
               v-model="password.value"
-              :error-message="password.errors "
+              :error-messages="password.errors"
               :rules="[rules.required]"
             ></v-text-field>
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" block @click="signUpHandler">
-            Sign up
-            <div class="ml-3" v-if="loading">
-              <v-expand-transition>
-                <v-progress-circular v-if="loading" size="24" color="white" indeterminate></v-progress-circular>
-              </v-expand-transition>
-            </div>
-          </v-btn>
+          <v-btn color="primary" block @click="signUpHandler">Sign up</v-btn>
         </v-card-actions>
         <v-card-actions>
           <p>
@@ -68,12 +61,35 @@
         </v-card-actions>
       </v-card>
     </v-flex>
+
+    <v-flex xs12 sm5 md4 lg3 v-if="successfulRegistration">
+      <v-card>
+        <v-card-title primary-title>
+          <v-layout column>
+            <v-flex xs12 align-self-center>
+              <v-avatar color="primary">
+                <v-icon large dark>check</v-icon>
+              </v-avatar>
+            </v-flex>
+            <v-flex xs12 align-self-center>
+              <h3 class="headline mb-0">Success</h3>
+            </v-flex>
+          </v-layout>
+        </v-card-title>
+        <v-card-text align-self-center>
+          <p
+            class="text-xs-center"
+          >We have sent a verification email to your email. Please click the link inside the email to verify your email.</p>
+        </v-card-text>
+      </v-card>
+    </v-flex>
   </v-layout>
 </template>
 <script>
 export default {
   data() {
     return {
+      successfulRegistration: false,
       email: { value: "", errors: [] },
       username: { value: "", errors: [] },
       password: { value: "", errors: [] },
@@ -103,6 +119,11 @@ export default {
         )
         .then(response => {
           if (response.data.status === "success") {
+            this.email.errors = [];
+            this.password.errors = [];
+            this.username.errors = [];
+            this.name.errors = [];
+            this.successfulRegistration = true;
           } else {
             this.username.errors = response.data.data.username
               ? response.data.data.username.map(e => {
@@ -117,6 +138,11 @@ export default {
               : [];
             this.name.errors = response.data.data.name
               ? response.data.data.name.map(e => {
+                  return e.message;
+                })
+              : [];
+            this.password.errors = response.data.data.password
+              ? response.data.data.password.map(e => {
                   return e.message;
                 })
               : [];
