@@ -6,7 +6,8 @@
       <v-toolbar-title>Jalapeno</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn flat to="/login">Sign in</v-btn>
+        <v-btn flat to="/login" v-if="!isSignedIn">Sign in</v-btn>
+        <v-btn flat to="/logout" v-if="isSignedIn">Logout</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
@@ -25,6 +26,7 @@ import Login from "./components/Login.vue";
 import Logout from "./components/Logout.vue";
 import WelcomePage from "./components/WelcomePage.vue";
 import NotFoundComponent from "./components/NotFoundComponent.vue";
+import EmailVerificationVue from "./components/EmailVerification.vue";
 
 const routes = [
   {
@@ -47,6 +49,14 @@ const routes = [
     path: "/logout",
     name: "logout",
     component: Logout
+  },
+  {
+    path: "/verify-email/:email/:code",
+    name: "VerifyEmail",
+    component: EmailVerificationVue,
+    meta: {
+      guest: true
+    }
   },
   {
     path: "/",
@@ -91,8 +101,17 @@ export default {
   components: {},
   data() {
     return {
+      isSignedIn: false,
       drawer: false
     };
+  },
+  watch: {
+    $route(to, from) {
+      this.isSignedIn = localStorage.getItem("jtoken") != null;
+    }
+  },
+  mounted() {
+    this.isSignedIn = localStorage.getItem("jtoken") != null;
   }
 };
 </script>
