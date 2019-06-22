@@ -77,9 +77,12 @@
           </v-layout>
         </v-card-title>
         <v-card-text align-self-center>
-          <p
-            class="text-xs-center"
-          >We have sent a verification email to your email. Please click the link inside the email to verify your email.</p>
+          <p class="text-xs-center">
+            We have sent a verification email to
+            <br>
+            <b>{{email.value}}</b>
+            <br>. Please click the link inside the email to verify your email.
+          </p>
         </v-card-text>
       </v-card>
     </v-flex>
