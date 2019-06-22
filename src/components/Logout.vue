@@ -10,8 +10,8 @@
 <script>
 export default {
   mounted: function() {
-    if (localStorage.getItem("token") != null) {
-      localStorage.removeItem("token");
+    if (localStorage.getItem("jtoken") != null) {
+      localStorage.removeItem("jtoken");
     }
     this.$emit("loggedout");
   }
