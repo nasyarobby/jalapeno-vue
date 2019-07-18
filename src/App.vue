@@ -21,57 +21,18 @@
 
 <script>
 import VueRouter from "vue-router";
-import Registration from "./components/Registration.vue";
-import Login from "./components/Login.vue";
-import Logout from "./components/Logout.vue";
-import WelcomePage from "./components/WelcomePage.vue";
-import NotFoundComponent from "./components/NotFoundComponent.vue";
-import EmailVerificationVue from "./components/EmailVerification.vue";
-
-const routes = [
-  {
-    path: "/register",
-    name: "register",
-    component: Registration,
-    meta: {
-      guest: true
-    }
-  },
-  {
-    path: "/login",
-    name: "login",
-    component: Login,
-    meta: {
-      guest: true
-    }
-  },
-  {
-    path: "/logout",
-    name: "logout",
-    component: Logout
-  },
-  {
-    path: "/verify-email/:email/:code",
-    name: "VerifyEmail",
-    component: EmailVerificationVue,
-    meta: {
-      guest: true
-    }
-  },
-  {
-    path: "/",
-    name: "WelcomePage",
-    component: WelcomePage
-  },
-  {
-    path: "*",
-    component: NotFoundComponent
-  }
-];
+import routes from "./Routes.vue";
 
 const router = new VueRouter({
   mode: "history",
-  routes: routes
+  routes: routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  }
 });
 
 router.beforeEach((to, from, next) => {
@@ -106,7 +67,7 @@ export default {
     };
   },
   watch: {
-    $route(to, from) {
+    $route() {
       this.isSignedIn = localStorage.getItem("jtoken") != null;
     }
   },
