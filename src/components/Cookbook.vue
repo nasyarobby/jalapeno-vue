@@ -5,13 +5,16 @@
         <v-card>
           <v-img
             class="white--text"
-            height="500px"
+            height="400px"
             :src="`https://unsplash.it/600/300?image=${Math.floor(Math.random() * 100) + 1}`"
-          ></v-img>
-          <v-card-title primary-title>
-            <h3 class="headline mb-0">Hello</h3>
-          </v-card-title>
-          <v-card-text>
+          >
+            <v-layout pa-0 ma-0 row fill-height align-end class="lightbox white--text">
+              <v-flex xs12 class="text-xs-center titlebg">
+                <h3 class="headline mb-0">{{dummy.cookbook.cookbook_name}}</h3>
+              </v-flex>
+            </v-layout>
+          </v-img>
+          <v-card-text class="text-xs-center">
             <v-chip color="pink" text-color="white">
               <v-icon left>label</v-icon>Category
             </v-chip>
@@ -54,6 +57,12 @@
     </v-layout>
   </v-container>
 </template>
+<style scoped>
+.titlebg {
+  background: rgba(70, 70, 70, 0.5);
+}
+</style>
+
 <script>
 export default {
   data() {
