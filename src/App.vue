@@ -12,7 +12,9 @@
     </v-toolbar>
     <v-content>
       <v-container fluid>
-        <router-view></router-view>
+        <v-fade-transition mode="out-in">
+          <router-view></router-view>
+        </v-fade-transition>
       </v-container>
     </v-content>
     <v-footer app></v-footer>
