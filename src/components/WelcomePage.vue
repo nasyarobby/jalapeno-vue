@@ -4,7 +4,7 @@
       <v-flex xs12>
         <h1 class="headline">Cookbooks Collection</h1>
       </v-flex>
-      <v-flex v-for="cookbook in this.dummy.cookbooks" :key="cookbook.id" xs12 sm6 md4 lg3>
+      <v-flex v-for="cookbook in this.cookbooks" :key="cookbook.id" xs12 sm6 md4 lg3>
         <v-card>
           <v-img
             class="white--text"
@@ -17,8 +17,8 @@
                   <router-link
                     class="white--text"
                     style="text-decoration:none;"
-                    :to="`/users/${username}/cookbooks/${cookbook.id}`"
-                  >{{cookbook.cookbook_name}}</router-link>
+                    :to="`/users/${cookbook.owner.id}/cookbooks/${cookbook.id}`"
+                  >{{cookbook.name}}</router-link>
                 </h3>
               </v-flex>
             </v-layout>
@@ -30,10 +30,10 @@
               {{cookbook.category}}
             </v-chip>
             <v-chip>
-              <v-avatar>
-                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="trevor" />
+              <v-avatar color="red">
+                <span class="white--text headline">{{cookbook.owner.name[0]}}</span>
               </v-avatar>
-              {{cookbook.owner}}
+              {{cookbook.owner.name}}
             </v-chip>
           </v-card-text>
           <v-card-actions>
@@ -67,42 +67,7 @@ export default {
   data() {
     return {
       username: this.$route.params.username,
-      dummy: {
-        cookbooks: [
-          {
-            id: 1,
-            user_id: 1,
-            owner: "Robby D",
-            cookbook_name: "Spend with Pennies",
-            category: "Salads",
-            numOfRecipes: 1
-          },
-          {
-            id: 2,
-            user_id: 1,
-            owner: "Robby D",
-            cookbook_name: "Cooking Classy",
-            category: "Drinks",
-            numOfRecipes: 25
-          },
-          {
-            id: 3,
-            user_id: 1,
-            owner: "Robby D",
-            cookbook_name: "Deserted Dessert",
-            category: "Dessert",
-            numOfRecipes: 10
-          },
-          {
-            id: 4,
-            user_id: 1,
-            owner: "Robby D",
-            cookbook_name: "My Cookbook",
-            category: "Cookbook",
-            numOfRecipes: 3
-          }
-        ]
-      }
+      cookbooks: []
     };
   },
   methods: {
@@ -111,7 +76,28 @@ export default {
     },
     love() {
       alert("Love");
+    },
+    getRecentCookbooks(num) {
+      let url = "/api/cookbooks/recent/" + num;
+
+      this.$http
+        .get(url, {
+          validateStatus: function(status) {
+            return status < 500;
+          }
+        })
+        .then(response => {
+          if (response.data.status == "success") {
+            this.cookbooks = response.data.data.cookbooks;
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
     }
+  },
+  mounted: function() {
+    this.getRecentCookbooks(4);
   }
 };
 </script>
