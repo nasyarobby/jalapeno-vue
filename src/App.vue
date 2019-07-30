@@ -1,6 +1,18 @@
 <template>
   <v-app>
-    <v-navigation-drawer app floating temporary v-model="drawer"></v-navigation-drawer>
+    <v-navigation-drawer app floating temporary v-model="drawer">
+      <v-list>
+        <v-list-tile v-for="item in items" :key="item.title">
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
     <v-toolbar app color="primary" dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Jalapeno</v-toolbar-title>
@@ -65,7 +77,14 @@ export default {
   data() {
     return {
       isSignedIn: false,
-      drawer: false
+      drawer: false,
+      items: [
+        { title: "Home", icon: "home" },
+        { title: "Cookbook", icon: "chrome_reader_mode" },
+        { title: "Meal Planning", icon: "event" },
+        { title: "Groceries", icon: "shopping_basket" },
+        { title: "Account", icon: "account_circle" }
+      ]
     };
   },
   watch: {
