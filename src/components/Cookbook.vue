@@ -10,24 +10,26 @@
           >
             <v-layout pa-0 ma-0 row fill-height align-end class="lightbox white--text">
               <v-flex xs12 class="text-xs-center titlebg">
-                <h3 class="headline mb-0">{{dummy.cookbook.cookbook_name}}</h3>
+                <h3 class="headline mb-0">{{cookbook.name}}</h3>
               </v-flex>
             </v-layout>
           </v-img>
           <v-card-text class="text-xs-center">
             <v-chip color="pink" text-color="white">
-              <v-icon left>label</v-icon>Category
+              <v-icon left>label</v-icon>
+              {{cookbook.category}}
             </v-chip>
             <v-chip>
-              <v-avatar>
-                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="trevor" />
-              </v-avatar>Owner
+              <v-avatar color="red">
+                <span class="white--text headline">{{cookbook.owner.name[0]}}</span>
+              </v-avatar>
+              {{cookbook.owner.name}}
             </v-chip>
           </v-card-text>
         </v-card>
         <v-container px-2>
           <v-layout wrap>
-            <v-flex v-for="recipe in this.dummy.cookbook.recipes" :key="recipe.id" xs12 sm6 md4>
+            <v-flex v-for="recipe in this.cookbook.recipes" :key="recipe.id" xs12 sm6 md4>
               <v-card height="100%">
                 <v-img
                   class="white--text"
@@ -47,12 +49,14 @@
                 </v-card-title>
                 <v-card-text>
                   <v-chip color="pink" text-color="white">
-                    <v-icon left>label</v-icon>Category
+                    <v-icon left>label</v-icon>
+                    {{recipe.categories[0].category}}
                   </v-chip>
                   <v-chip>
-                    <v-avatar>
-                      <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="trevor" />
-                    </v-avatar>Owner
+                    <v-avatar color="red">
+                      <span class="white--text headline">{{cookbook.owner.name[0]}}</span>
+                    </v-avatar>
+                    {{cookbook.owner.name}}
                   </v-chip>
                 </v-card-text>
               </v-card>
@@ -74,198 +78,8 @@ export default {
   data() {
     return {
       username: this.$route.params.username,
-      dummy: {
-        cookbook: {
-          id: 1,
-          user_id: 1,
-          owner: "Robby D",
-          cookbook_name: "Spend with Pennies",
-          category: "Salads",
-          numOfRecipes: 1,
-          recipes: [
-            {
-              id: 1,
-              recipe_name: "Fresh Tomato Salad",
-              description:
-                "Fresh garden tomatoes topped with herbs and \
-                a simple olive oil and vinegar mixture.",
-              directions:
-                "1. Place tomatoes, red onion, and bocconcini \
-                (if using) in shallow bowl. \n2. Drizzle with olive oil and \
-                red wine vinegar. Toss to combine. \n3. Season with salt, \
-                pepper, and fresh herbs to taste.",
-              preparationTime: "10 min",
-              cookTime: "0 min",
-              portions: 4,
-              notes: "Great to put in the fridge!"
-            },
-            {
-              id: 2,
-              recipe_name: "Lemonade",
-              description:
-                "There's nothing more refreshing to quench your \
-                thirst on a hot summer day than a tall ice cold glass of this \
-                lemonade!It's incredibly easy to make and a million times \
-                better than any store-bought mix.",
-              directions:
-                "1.In a small saucepan combine sugar and 2 cups \
-                water. Bring to a boil, while stirring frequently to dissolve \
-                sugar. All to cool to room temperature, about 30 minutes. \n\
-                2.In a large pitcher stir together sugar syrup mixture, 7 \
-                cups cold water and lemon juice. Add ice and serve cold. \
-                Store in refrigerator.",
-              preparationTime: "10 min",
-              cookTime: "5 min",
-              portions: 10,
-              notes: "Best during a hot summer day!"
-            },
-            {
-              id: 1,
-              recipe_name: "Fresh Tomato Salad",
-              description:
-                "Fresh garden tomatoes topped with herbs and \
-                a simple olive oil and vinegar mixture.",
-              directions:
-                "1. Place tomatoes, red onion, and bocconcini \
-                (if using) in shallow bowl. \n2. Drizzle with olive oil and \
-                red wine vinegar. Toss to combine. \n3. Season with salt, \
-                pepper, and fresh herbs to taste.",
-              preparationTime: "10 min",
-              cookTime: "0 min",
-              portions: 4,
-              notes: "Great to put in the fridge!"
-            },
-            {
-              id: 2,
-              recipe_name: "Lemonade",
-              description:
-                "There's nothing more refreshing to quench your \
-                thirst on a hot summer day than a tall ice cold glass of this \
-                lemonade!It's incredibly easy to make and a million times \
-                better than any store-bought mix.",
-              directions:
-                "1.In a small saucepan combine sugar and 2 cups \
-                water. Bring to a boil, while stirring frequently to dissolve \
-                sugar. All to cool to room temperature, about 30 minutes. \n\
-                2.In a large pitcher stir together sugar syrup mixture, 7 \
-                cups cold water and lemon juice. Add ice and serve cold. \
-                Store in refrigerator.",
-              preparationTime: "10 min",
-              cookTime: "5 min",
-              portions: 10,
-              notes: "Best during a hot summer day!"
-            },
-            {
-              id: 1,
-              recipe_name: "Fresh Tomato Salad",
-              description:
-                "Fresh garden tomatoes topped with herbs and \
-                a simple olive oil and vinegar mixture.",
-              directions:
-                "1. Place tomatoes, red onion, and bocconcini \
-                (if using) in shallow bowl. \n2. Drizzle with olive oil and \
-                red wine vinegar. Toss to combine. \n3. Season with salt, \
-                pepper, and fresh herbs to taste.",
-              preparationTime: "10 min",
-              cookTime: "0 min",
-              portions: 4,
-              notes: "Great to put in the fridge!"
-            },
-            {
-              id: 2,
-              recipe_name: "Lemonade",
-              description:
-                "There's nothing more refreshing to quench your \
-                thirst on a hot summer day than a tall ice cold glass of this \
-                lemonade!It's incredibly easy to make and a million times \
-                better than any store-bought mix.",
-              directions:
-                "1.In a small saucepan combine sugar and 2 cups \
-                water. Bring to a boil, while stirring frequently to dissolve \
-                sugar. All to cool to room temperature, about 30 minutes. \n\
-                2.In a large pitcher stir together sugar syrup mixture, 7 \
-                cups cold water and lemon juice. Add ice and serve cold. \
-                Store in refrigerator.",
-              preparationTime: "10 min",
-              cookTime: "5 min",
-              portions: 10,
-              notes: "Best during a hot summer day!"
-            },
-            {
-              id: 1,
-              recipe_name: "Fresh Tomato Salad",
-              description:
-                "Fresh garden tomatoes topped with herbs and \
-                a simple olive oil and vinegar mixture.",
-              directions:
-                "1. Place tomatoes, red onion, and bocconcini \
-                (if using) in shallow bowl. \n2. Drizzle with olive oil and \
-                red wine vinegar. Toss to combine. \n3. Season with salt, \
-                pepper, and fresh herbs to taste.",
-              preparationTime: "10 min",
-              cookTime: "0 min",
-              portions: 4,
-              notes: "Great to put in the fridge!"
-            },
-            {
-              id: 2,
-              recipe_name: "Lemonade",
-              description:
-                "There's nothing more refreshing to quench your \
-                thirst on a hot summer day than a tall ice cold glass of this \
-                lemonade!It's incredibly easy to make and a million times \
-                better than any store-bought mix.",
-              directions:
-                "1.In a small saucepan combine sugar and 2 cups \
-                water. Bring to a boil, while stirring frequently to dissolve \
-                sugar. All to cool to room temperature, about 30 minutes. \n\
-                2.In a large pitcher stir together sugar syrup mixture, 7 \
-                cups cold water and lemon juice. Add ice and serve cold. \
-                Store in refrigerator.",
-              preparationTime: "10 min",
-              cookTime: "5 min",
-              portions: 10,
-              notes: "Best during a hot summer day!"
-            },
-            {
-              id: 1,
-              recipe_name: "Fresh Tomato Salad",
-              description:
-                "Fresh garden tomatoes topped with herbs and \
-                a simple olive oil and vinegar mixture.",
-              directions:
-                "1. Place tomatoes, red onion, and bocconcini \
-                (if using) in shallow bowl. \n2. Drizzle with olive oil and \
-                red wine vinegar. Toss to combine. \n3. Season with salt, \
-                pepper, and fresh herbs to taste.",
-              preparationTime: "10 min",
-              cookTime: "0 min",
-              portions: 4,
-              notes: "Great to put in the fridge!"
-            },
-            {
-              id: 2,
-              recipe_name: "Lemonade",
-              description:
-                "There's nothing more refreshing to quench your \
-                thirst on a hot summer day than a tall ice cold glass of this \
-                lemonade!It's incredibly easy to make and a million times \
-                better than any store-bought mix.",
-              directions:
-                "1.In a small saucepan combine sugar and 2 cups \
-                water. Bring to a boil, while stirring frequently to dissolve \
-                sugar. All to cool to room temperature, about 30 minutes. \n\
-                2.In a large pitcher stir together sugar syrup mixture, 7 \
-                cups cold water and lemon juice. Add ice and serve cold. \
-                Store in refrigerator.",
-              preparationTime: "10 min",
-              cookTime: "5 min",
-              portions: 10,
-              notes: "Best during a hot summer day!"
-            }
-          ]
-        }
-      }
+      cid: this.$route.params.cid,
+      cookbook: {}
     };
   },
   methods: {
@@ -274,7 +88,28 @@ export default {
     },
     love() {
       alert("Love");
+    },
+    getUserCookbookContent() {
+      let url = "/api/cookbooks/id/" + this.cid;
+
+      this.$http
+        .get(url, {
+          validateStatus: function(status) {
+            return status < 500;
+          }
+        })
+        .then(response => {
+          if (response.data.status == "success") {
+            this.cookbook = response.data.data;
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
     }
+  },
+  mounted: function() {
+    this.getUserCookbookContent();
   }
 };
 </script>

@@ -31,13 +31,21 @@
             </v-chip>
             <v-chip>
               <v-avatar color="red">
-                <span class="white--text headline">{{cookbook.owner.name[0]}}</span>
+                <router-link
+                  :to="`users/${cookbook.owner.id}/cookbooks/`"
+                  style="text-decoration:none"
+                >
+                  <span class="white--text headline">{{cookbook.owner.name[0]}}</span>
+                </router-link>
               </v-avatar>
-              {{cookbook.owner.name}}
+              <router-link
+                :to="`users/${cookbook.owner.id}/cookbooks/`"
+                style="text-decoration:none"
+              >{{cookbook.owner.name}}</router-link>
             </v-chip>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="light-blue" dark>
+            <v-btn color="light-blue" dark :to="`/users/${username}/cookbooks/${cookbook.id}`">
               <v-icon>book</v-icon>
               {{cookbook.numOfRecipes }} recipes
             </v-btn>
