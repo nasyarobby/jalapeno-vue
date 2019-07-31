@@ -57,11 +57,6 @@ export default [
     component: Recipe
   },
   {
-    path: "/:username/:cid",
-    name: "userCookbook",
-    component: Registration
-  },
-  {
     path: "/",
     name: "WelcomePage",
     component: WelcomePage
