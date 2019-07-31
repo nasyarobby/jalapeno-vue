@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer app floating temporary v-model="drawer">
       <v-list>
-        <v-list-tile v-for="item in items" :key="item.title">
+        <v-list-tile v-for="item in menuItems" :key="item.title" :to="item.href">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -78,9 +78,9 @@ export default {
     return {
       isSignedIn: false,
       drawer: false,
-      items: [
-        { title: "Home", icon: "home" },
-        { title: "Cookbook", icon: "chrome_reader_mode" },
+      menuItems: [
+        { title: "Home", icon: "home", href: "/" },
+        { title: "Cookbook", icon: "chrome_reader_mode", href: "/cookbooks/" },
         { title: "Meal Planning", icon: "event" },
         { title: "Groceries", icon: "shopping_basket" },
         { title: "Account", icon: "account_circle" }
