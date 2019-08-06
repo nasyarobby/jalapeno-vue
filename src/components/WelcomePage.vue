@@ -17,7 +17,7 @@
                   <router-link
                     class="white--text"
                     style="text-decoration:none;"
-                    :to="`/users/${cookbook.owner.id}/cookbooks/${cookbook.id}`"
+                    :to="`/users/${cookbook.owner.username}/cookbooks/${cookbook.id}`"
                   >{{cookbook.name}}</router-link>
                 </h3>
               </v-flex>
@@ -32,14 +32,14 @@
             <v-chip>
               <v-avatar color="red">
                 <router-link
-                  :to="`users/${cookbook.owner.id}/cookbooks/`"
+                  :to="`users/${cookbook.owner.username}/cookbooks/`"
                   style="text-decoration:none"
                 >
                   <span class="white--text headline">{{cookbook.owner.name[0]}}</span>
                 </router-link>
               </v-avatar>
               <router-link
-                :to="`users/${cookbook.owner.id}/cookbooks/`"
+                :to="`users/${cookbook.owner.username}/cookbooks/`"
                 style="text-decoration:none"
               >{{cookbook.owner.name}}</router-link>
             </v-chip>

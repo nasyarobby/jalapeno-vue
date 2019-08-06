@@ -4,6 +4,23 @@
       <v-flex xs12>
         <h1 class="headline">{{this.user.name}}'s Cookbooks</h1>
       </v-flex>
+      <v-flex v-if="this.cookbooks.length==0" xs12>This user has not created any cookbooks yet.</v-flex>
+      <v-flex xs12 sm6 md4 lg3>
+        <v-card color="blue" height="397px">
+          <v-container fluid fill-height>
+            <v-layout align-center justify-center column>
+              <v-card-actions class="justify-center" xs12>
+                <v-btn color="error" fab large dark to="/create-new-cookbook">
+                  <v-icon>add</v-icon>
+                </v-btn>
+              </v-card-actions>
+              <v-card-title class="justify-center white--text">
+                <h3 class="headline">Create New Cookbook</h3>
+              </v-card-title>
+            </v-layout>
+          </v-container>
+        </v-card>
+      </v-flex>
       <v-flex v-for="cookbook in this.cookbooks" :key="cookbook.id" xs12 sm6 md4 lg3>
         <v-card>
           <v-img
@@ -81,6 +98,10 @@ export default {
   },
   mounted: function() {
     this.getUserCookbooks();
+  },
+  beforeRouteUpdate(to, from, next) {
+    (this.username = to.params.username), this.getUserCookbooks();
+    next();
   }
 };
 </script>

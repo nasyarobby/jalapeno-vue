@@ -10,6 +10,7 @@ import EmailVerificationVue from "./components/EmailVerification.vue";
 import Cookbooks from "./components/Cookbooks.vue";
 import Cookbook from "./components/Cookbook.vue";
 import Recipe from "./components/Recipe.vue";
+import CookbookCreate from "./components/CookbookCreate.vue";
 
 export default [
   {
@@ -50,6 +51,11 @@ export default [
     path: "/users/:username/cookbooks/:cid",
     name: "userCookbook",
     component: Cookbook
+  },
+  {
+    path: "/create-new-cookbook",
+    name: "createNewCookbook",
+    component: CookbookCreate
   },
   {
     path: "/users/:username/recipe/:rid",
