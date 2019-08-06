@@ -3,6 +3,7 @@ import './plugins/vuetify'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import Axios from "axios"
+import jwt from "jwt-simple"
 
 const API_URL = process.env.VUE_APP_API_URL || 'http://localhost:3000';
 const axios = Axios.create({
@@ -14,6 +15,7 @@ const axios = Axios.create({
 })
 
 Vue.prototype.$http = axios;
+Vue.prototype.$jwt = jwt;
 Vue.prototype.$url = {
   main_api: API_URL
 };
