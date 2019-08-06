@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer app floating temporary v-model="drawer">
       <v-list>
-        <v-list-tile v-for="item in menuItems" :key="item.title" :to="item.href">
+        <v-list-tile v-for="item in menuItemsFiltered" :key="item.title" :to="item.href">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -77,23 +77,38 @@ export default {
   data() {
     return {
       isSignedIn: false,
+      jwt: undefined,
       drawer: false,
       menuItems: [
-        { title: "Home", icon: "home", href: "/" },
-        { title: "Cookbook", icon: "chrome_reader_mode", href: "/cookbooks/" },
-        { title: "Meal Planning", icon: "event" },
-        { title: "Groceries", icon: "shopping_basket" },
-        { title: "Account", icon: "account_circle" }
+        { title: "Home", icon: "home", href: "/"},
+        { title: "Cookbook", icon: "chrome_reader_mode", href: "/cookbooks/"},
+        { title: "Meal Planning", icon: "event"},
+        { title: "Groceries", icon: "shopping_basket"},
+        { title: "Account", icon: "account_circle", authOnly: true }
       ]
     };
   },
+  methods: {
+    checkAuth: function() {
+      this.jwt = this.$jwt.decode(localStorage.getItem("jtoken"), "", true);
+      this.isSignedIn = this.jwt != null;
+    }
+  },
+  computed: {
+    menuItemsFiltered: function() {
+      if(!this.isSignedIn)
+      return this.menuItems.filter(e => !e.authOnly)
+      else
+      return this.menuItems;
+    }
+  },
   watch: {
     $route() {
-      this.isSignedIn = localStorage.getItem("jtoken") != null;
+      this.checkAuth();
     }
   },
   mounted() {
-    this.isSignedIn = localStorage.getItem("jtoken") != null;
+    this.checkAuth();
   }
 };
 </script>
