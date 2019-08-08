@@ -73,7 +73,7 @@ export default {
     return {
       username: this.$route.params.username,
       cookbooks: [],
-      user: undefined
+      user: { name: "" }
     };
   },
   methods: {
