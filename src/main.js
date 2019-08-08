@@ -16,6 +16,10 @@ const axios = Axios.create({
 
 Vue.prototype.$http = axios;
 Vue.prototype.$jwt = jwt;
+let token = localStorage.getItem("jtoken");
+if (token)
+  Vue.prototype.$user = jwt.decode(token, "", true);
+
 Vue.prototype.$url = {
   main_api: API_URL
 };

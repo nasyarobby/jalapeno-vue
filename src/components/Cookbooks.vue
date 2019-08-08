@@ -5,12 +5,18 @@
         <h1 class="headline">{{this.user.name}}'s Cookbooks</h1>
       </v-flex>
       <v-flex v-if="this.cookbooks.length==0" xs12>This user has not created any cookbooks yet.</v-flex>
-      <v-flex xs12 sm6 md4 lg3>
+      <v-flex xs12 sm6 md4 lg3 v-if="$user && $user.username==username">
         <v-card color="blue" height="397px">
           <v-container fluid fill-height>
             <v-layout align-center justify-center column>
               <v-card-actions class="justify-center" xs12>
-                <v-btn color="error" fab large dark to="/create-new-cookbook">
+                <v-btn
+                  color="error"
+                  fab
+                  large
+                  dark
+                  :to="{ name: 'createNewCookbook', params: { username: this.username }}"
+                >
                   <v-icon>add</v-icon>
                 </v-btn>
               </v-card-actions>
@@ -45,14 +51,15 @@
               {{cookbook.numOfRecipes }} recipes
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn icon @click="love">
-              <v-icon>favorite</v-icon>
+            <v-btn
+              icon
+              :to="{ name: 'editCookbook', params: { username: cookbook.owner.username, cid: cookbook.id }}"
+              v-if="$user && $user.username == cookbook.owner.username"
+            >
+              <v-icon>edit</v-icon>
             </v-btn>
-            <v-btn icon>
-              <v-icon>bookmark</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>share</v-icon>
+            <v-btn icon v-if="$user && $user.username == cookbook.owner.username">
+              <v-icon>delete</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>

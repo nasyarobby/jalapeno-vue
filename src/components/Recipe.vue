@@ -65,9 +65,17 @@
           </v-card-title>
         </v-card>
         <v-card>
-          <v-card-actions>
-            <v-btn flat color="orange">Share</v-btn>
-            <v-btn flat color="orange">Explore</v-btn>
+          <v-card-actions v-if="$user && $user.username == recipe.cookbooks[0].owner.username">
+            <v-spacer></v-spacer>
+            <v-btn
+              icon
+              :to="{ name: 'editUserRecipe', params: { username: recipe.cookbooks[0].owner.username, rid: recipe.id }}"
+            >
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>delete</v-icon>
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>

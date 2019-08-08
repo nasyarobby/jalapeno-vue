@@ -91,7 +91,7 @@ export default {
       alert("Love");
     },
     getRecentCookbooks(num) {
-      let url = "/api/cookbooks/recent/" + 12;
+      let url = "/api/cookbooks/";
 
       this.$http
         .get(url, {

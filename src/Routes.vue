@@ -11,6 +11,11 @@ import Cookbooks from "./components/Cookbooks.vue";
 import Cookbook from "./components/Cookbook.vue";
 import Recipe from "./components/Recipe.vue";
 import CookbookCreate from "./components/CookbookCreate.vue";
+import RecipeCreateVue from "./components/RecipeCreate.vue";
+import AllCookbooksVue from "./components/AllCookbooks.vue";
+import CookbookEditVue from "./components/CookbookEdit.vue";
+import RecipeEditVue from "./components/RecipeEdit.vue";
+import VersionVue from "./components/Version.vue";
 
 export default [
   {
@@ -48,20 +53,41 @@ export default [
     component: Cookbooks
   },
   {
+    path: "/cookbooks",
+    name: "allCookbooks",
+    component: AllCookbooksVue
+  },
+  {
+    path: "/users/:username/cookbooks/new",
+    name: "createNewCookbook",
+    component: CookbookCreate
+  },
+  {
+    path: "/users/:username/cookbooks/:cid/edit",
+    name: "editCookbook",
+    component: CookbookEditVue
+  },
+  {
     path: "/users/:username/cookbooks/:cid",
     name: "userCookbook",
     component: Cookbook
   },
   {
-    path: "/create-new-cookbook",
-    name: "createNewCookbook",
-    component: CookbookCreate
+    path: "/users/:username/cookbooks/:cid/create-new-recipe",
+    name: "createNewRecipe",
+    component: RecipeCreateVue
+  },
+  {
+    path: "/users/:username/recipe/:rid/edit",
+    name: "editUserRecipe",
+    component: RecipeEditVue
   },
   {
     path: "/users/:username/recipe/:rid",
     name: "userRecipe",
     component: Recipe
   },
+  { path: "/version", name: "Version", component: VersionVue },
   {
     path: "/",
     name: "WelcomePage",

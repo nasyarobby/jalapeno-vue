@@ -80,11 +80,12 @@ export default {
       jwt: undefined,
       drawer: false,
       menuItems: [
-        { title: "Home", icon: "home", href: "/"},
-        { title: "Cookbook", icon: "chrome_reader_mode", href: "/cookbooks/"},
-        { title: "Meal Planning", icon: "event"},
-        { title: "Groceries", icon: "shopping_basket"},
-        { title: "acc", icon: "account_circle", authOnly: true, href:"" }
+        { title: "Home", icon: "home", href: "/" },
+        { title: "Cookbook", icon: "chrome_reader_mode", href: "/cookbooks/" },
+        { title: "Meal Planning", icon: "event" },
+        { title: "Groceries", icon: "shopping_basket" },
+        { title: "acc", icon: "account_circle", authOnly: true, href: "" },
+        { title: "Version", icon: "info", href: "/version" }
       ]
     };
   },
@@ -92,24 +93,25 @@ export default {
     checkAuth: function() {
       this.jwt = this.$jwt.decode(localStorage.getItem("jtoken"), "", true);
       this.isSignedIn = this.jwt != null;
-      if(this.jwt) {
-        this.jwt.firstname = this.jwt.name[0].toUpperCase()+this.jwt.name.substring(1,this.jwt.name.indexOf(" ")).toLowerCase()
+      if (this.jwt) {
+        this.jwt.firstname =
+          this.jwt.name[0].toUpperCase() +
+          this.jwt.name.substring(1, this.jwt.name.indexOf(" ")).toLowerCase();
         this.menuItems = this.menuItems.map(e => {
-          if(e.title=="acc") {
-            e.title = `${this.jwt.firstname}'s Cookbook`
-            e.href= `/users/${this.jwt.username}/cookbooks`
+          if (e.title == "acc") {
+            e.title = `${this.jwt.firstname}'s Cookbook`;
+            e.href = `/users/${this.jwt.username}/cookbooks`;
           }
           return e;
-        })
+        });
       }
     }
   },
   computed: {
     menuItemsFiltered: function() {
-      if(!this.isSignedIn) {
-        return this.menuItems.filter(e => !e.authOnly)
-      }
-      else {
+      if (!this.isSignedIn) {
+        return this.menuItems.filter(e => !e.authOnly);
+      } else {
         return this.menuItems;
       }
     },

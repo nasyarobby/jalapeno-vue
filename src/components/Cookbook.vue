@@ -25,10 +25,43 @@
               </v-avatar>
               {{cookbook.owner.name}}
             </v-chip>
+            <v-spacer></v-spacer>
+            <v-btn
+              icon
+              :to="{ name: 'editCookbook', params: { username: cookbook.owner.username, cid: cookbook.id }}"
+              v-if="$user && $user.username == cookbook.owner.username"
+            >
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <v-btn icon v-if="$user && $user.username == cookbook.owner.username">
+              <v-icon>delete</v-icon>
+            </v-btn>
           </v-card-text>
         </v-card>
         <v-container px-2>
           <v-layout wrap>
+            <v-flex xs12 sm6 md4 v-if="$user && $user.username==username">
+              <v-card color="blue" height="100%">
+                <v-container fluid fill-height>
+                  <v-layout align-center justify-center column>
+                    <v-card-actions class="justify-center" xs12>
+                      <v-btn
+                        color="error"
+                        fab
+                        large
+                        dark
+                        :to="`/users/${this.username}/cookbooks/${this.cid}/create-new-recipe`"
+                      >
+                        <v-icon>add</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-card-title class="justify-center white--text" xs12>
+                      <h3 class="headline">Create New Recipe</h3>
+                    </v-card-title>
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-flex>
             <v-flex v-for="recipe in this.cookbook.recipes" :key="recipe.id" xs12 sm6 md4>
               <v-card height="100%">
                 <v-img
@@ -36,16 +69,23 @@
                   height="200px"
                   :src="`https://unsplash.it/600/300?image=${Math.floor(Math.random() * 100) + 1}`"
                 ></v-img>
+
                 <v-card-title primary-title>
-                  <h3 class="headline mb-0">
-                    <router-link
-                      :to="`/users/${username}/recipe/${recipe.id}`"
-                    >{{recipe.recipe_name}}</router-link>
-                  </h3>
-                  <div>{{ recipe.description }}</div>
-                  <div
+                  <v-layout column>
+                    <v-flex mb-0>
+                      <h3 class="headline mb-0">
+                        <router-link
+                          :to="`/users/${username}/recipe/${recipe.id}`"
+                        >{{recipe.recipe_name}}</router-link>
+                      </h3>
+                    </v-flex>
+                    <v-flex>
+                      <div>{{ recipe.description }}</div>
+                    </v-flex>
+                  </v-layout>
+                  <!--<div
                     class="headline text-xs-center mt-2 font-weight-thin font-italic"
-                  >"{{ recipe.notes }}"</div>
+                  >"{{ recipe.notes }}"</div>-->
                 </v-card-title>
                 <v-card-text>
                   <v-chip color="pink" text-color="white">
