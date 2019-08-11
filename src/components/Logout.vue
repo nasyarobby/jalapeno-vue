@@ -12,6 +12,7 @@ export default {
   mounted: function() {
     if (localStorage.getItem("jtoken") != null) {
       localStorage.removeItem("jtoken");
+      this.$router.go();
     }
     this.$emit("loggedout");
   }

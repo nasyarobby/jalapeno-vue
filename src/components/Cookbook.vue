@@ -6,7 +6,7 @@
           <v-img
             class="white--text"
             height="500px"
-            :src="`https://unsplash.it/600/300?image=${Math.floor(Math.random() * 100) + 1}`"
+            :src="`http://23.95.85.208:3001/pictures/book${cookbook.id%7}.jpg`"
           >
             <v-layout pa-0 ma-0 row fill-height align-end class="lightbox white--text">
               <v-flex xs12 class="text-xs-center titlebg">
@@ -33,11 +33,27 @@
             >
               <v-icon>edit</v-icon>
             </v-btn>
-            <v-btn icon v-if="$user && $user.username == cookbook.owner.username">
+            <v-btn
+              icon
+              v-if="$user && $user.username == cookbook.owner.username"
+              @click.stop="deleteCookbookDialog=true"
+            >
               <v-icon>delete</v-icon>
             </v-btn>
           </v-card-text>
         </v-card>
+
+        <v-dialog v-model="deleteCookbookDialog" max-width="600">
+          <v-card>
+            <v-card-title class="headline">Delete this cookbook?</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" flat="flat" @click="deleteCookbookDialog = false">cancel</v-btn>
+              <v-btn color="error" @click="deleteCookbook()">Delete</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <v-container px-2>
           <v-layout wrap>
             <v-flex xs12 sm6 md4 v-if="$user && $user.username==username">
@@ -67,7 +83,7 @@
                 <v-img
                   class="white--text"
                   height="200px"
-                  :src="`https://unsplash.it/600/300?image=${Math.floor(Math.random() * 100) + 1}`"
+                  :src="`http://23.95.85.208:3001/pictures/food${recipe.id%18}.jpg`"
                 ></v-img>
 
                 <v-card-title primary-title>
@@ -119,10 +135,35 @@ export default {
     return {
       username: this.$route.params.username,
       cid: this.$route.params.cid,
+      deleteCookbookDialog: false,
       cookbook: {}
     };
   },
   methods: {
+    deleteCookbook() {
+      this.$http
+        .delete(
+          "/api/cookbooks/id/" + this.cid,
+          {},
+          {
+            validateStatus: function(status) {
+              return status < 500;
+            }
+          }
+        )
+        .then(response => {
+          if (response.data.status == "success") {
+            this.deleteCookbookDialog = false;
+            this.$router.push({
+              name: "userCookbooks",
+              params: { username: this.username }
+            });
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
+    },
     dummyClick() {
       alert("Ets");
     },

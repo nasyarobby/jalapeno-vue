@@ -99,7 +99,7 @@ export default {
           this.jwt.name.substring(1, this.jwt.name.indexOf(" ")).toLowerCase();
         this.menuItems = this.menuItems.map(e => {
           if (e.title == "acc") {
-            e.title = `${this.jwt.firstname}'s Cookbook`;
+            e.title = `${this.jwt.username}'s Cookbook`;
             e.href = `/users/${this.jwt.username}/cookbooks`;
           }
           return e;

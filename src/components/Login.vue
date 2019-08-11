@@ -96,6 +96,7 @@ export default {
                   } else {
                     this.$router.push("/");
                   }
+                  this.$router.go();
                 }
               } else {
                 for (let key in response.data.data) {

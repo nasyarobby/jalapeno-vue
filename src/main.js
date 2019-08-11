@@ -16,6 +16,7 @@ const axios = Axios.create({
 
 Vue.prototype.$http = axios;
 Vue.prototype.$jwt = jwt;
+Vue.prototype.$image = process.env.VUE_APP_IMAGE_HOST
 let token = localStorage.getItem("jtoken");
 if (token)
   Vue.prototype.$user = jwt.decode(token, "", true);

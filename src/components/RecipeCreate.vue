@@ -126,7 +126,8 @@ export default {
         description: [v => !!v.trim() || "Description is required."],
         directions: [
           v =>
-            !!v.trim() || "What cooking recipes do not have any directions??!!"
+            !!v.trim() ||
+            "What cooking recipe that does not have any directions??!! Good lord!"
         ],
         cookTime: [
           v => {
